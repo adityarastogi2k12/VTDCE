@@ -6,7 +6,7 @@ Created on Tue Mar 10 12:07:48 2020
 @author: mig-arindam
 """
 import os
-abspath = os.path.abspath('/media/cds/storage/DATA-1/ARIDAM/Aditya_MRI/Brain') ## String which contains absolute path to the script file
+abspath = os.path.abspath(ENTER_YOUR_DIRECTORY_PATH) ## String which contains absolute path to the script file
 os.chdir(abspath) ## Setting up working directory
 #%%
 #os,time
@@ -26,7 +26,6 @@ import scipy.io as sio
 from model_vtnet_2 import vt_net
 import torch.optim as optim
 
-#from model_cbf_3d_2d_concat_nimhans  import ldct_32d_net
 
 #%%
 print ('*************************************************')
@@ -39,7 +38,7 @@ config  = Config()
 def getTestingData():
     #num: set this value between 0 to 163. There are total testing 164 slices in testing data
     print('Reading the data. Please wait...')
-    filename ='Dataset/R20TestdatasetVTDCE_PAT35.hdf5' #set the correct path here
+    filename ='Dataset/R20TestdatasetVTDCE_PATC.hdf5' #set the correct path here
     
     with h5.File(filename,'r') as f:
     	tstData,tstLabel,MapsUS=f['tstData'][:],f['tstLabel'][:],f['MapUS'][:]
@@ -79,7 +78,7 @@ else:
         
     
 #%%
-net.load_state_dict(torch.load('/media/cds/storage/DATA-1/ARIDAM/Aditya_MRI/Brain/savedModels_R20_New/30Aug2021_1223_model_parameters/net_epoch_44.pth')) #location of epoch
+net.load_state_dict(torch.load('/checkpoint.pth')) #location of epoch
 
 
 net = net.eval()
@@ -111,34 +110,6 @@ for i,data in enumerate(testloader):
     test_residue2 = output_test2.cpu()
     test_residue2 = test_residue2.detach().numpy()
     Vp.append(test_residue2)
-
-#from numpy import save
-#save('test_residue.npy',test_residue1)
-#
-##%%
-#
-##
-#from scipy.io import savemat
-##
-#Residue_test = np.load('test_residue.npy')
-##%%
-#
-## abspath = os.path.abspath('/media/cds/storage/DATA-1/ARIDAM/main_res/kwia_results') ## String which contains absolute path to the script file
-## os.chdir(abspath) ## Setting up working directory
-#
-#
-##%%
-#
-##
-#adict = {}
-#adict['test_residue'] = Residue_test
-#savemat('test_residue.mat',adict)
-#%%
-print('done!!!')
-#%%
-
-
-
 
 
 
@@ -197,5 +168,5 @@ temp = np.squeeze(np.concatenate((Kt,Vp),axis = 1))
 #%%
 
 save_dir = 'save_recon/'
-save_file_name = save_dir + 'VTDCE_2_R20_New_PAT35_2' +'.mat'
+save_file_name = save_dir + 'VTDCE_2_R20_PATC' +'.mat'
 sio.savemat(save_file_name,{'GT':np.asarray(tstLabel),'MapUS':np.asarray( np.abs(MapsUS)),'recon':np.asarray( np.abs(temp))})
