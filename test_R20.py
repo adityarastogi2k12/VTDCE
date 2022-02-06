@@ -38,7 +38,7 @@ config  = Config()
 def getTestingData():
     #num: set this value between 0 to 163. There are total testing 164 slices in testing data
     print('Reading the data. Please wait...')
-    filename ='Dataset/R20TestdatasetVTDCE_PATC.hdf5' #set the correct path here
+    filename ='Dataset/R20TestdatasetVTDCE_PATB.hdf5' #set the correct path here
     
     with h5.File(filename,'r') as f:
     	tstData,tstLabel,MapsUS=f['tstData'][:],f['tstLabel'][:],f['MapUS'][:]
@@ -168,5 +168,5 @@ temp = np.squeeze(np.concatenate((Kt,Vp),axis = 1))
 #%%
 
 save_dir = 'save_recon/'
-save_file_name = save_dir + 'VTDCE_2_R20_PATC' +'.mat'
+save_file_name = save_dir + 'VTDCE_2_R20_PATB' +'.mat'
 sio.savemat(save_file_name,{'GT':np.asarray(tstLabel),'MapUS':np.asarray( np.abs(MapsUS)),'recon':np.asarray( np.abs(temp))})
