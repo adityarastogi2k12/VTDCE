@@ -3,7 +3,7 @@
 """
 Created on Tue Mar 10 12:07:48 2020
 
-@author: mig-arindam
+@author:aditya
 """
 import os
 abspath = os.path.abspath(ENTER_YOUR_DIRECTORY_PATH) ## String which contains absolute path to the script file
